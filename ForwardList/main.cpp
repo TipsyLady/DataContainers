@@ -1,10 +1,10 @@
-#include <iostream>
+п»ї#include <iostream>
 using namespace std;
 
 class Element
 {
-	int Data; //значение элемента
-	Element* pNext; //адрес следующего элемента
+	int Data; //Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р°
+	Element* pNext; //Р°РґСЂРµСЃ СЃР»РµРґСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р°
 public:
 	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
@@ -19,51 +19,169 @@ public:
 
 class ForwardList
 {
-	Element* Head;//голова списка - указывает на начальный(нулевой) элемент списка
+	int Size;
+	Element* Head;//РіРѕР»РѕРІР° СЃРїРёСЃРєР° - СѓРєР°Р·С‹РІР°РµС‚ РЅР° РЅР°С‡Р°Р»СЊРЅС‹Р№(РЅСѓР»РµРІРѕР№) СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°
 public:
+	int get_Size() { return Size; }
 	ForwardList()
 	{
-		Head = nullptr; //Конструктор по умолчанию, создает пустой список
-		//Если HEAD указывает на ноль, то список пуст, те. не содержит эл-ов
-		// и HEAD больше не на что указывать.
+		Head = nullptr; //РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, СЃРѕР·РґР°РµС‚ РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє
+		//Р•СЃР»Рё HEAD СѓРєР°Р·С‹РІР°РµС‚ РЅР° РЅРѕР»СЊ, С‚Рѕ СЃРїРёСЃРѕРє РїСѓСЃС‚, С‚Рµ. РЅРµ СЃРѕРґРµСЂР¶РёС‚ СЌР»-РѕРІ
+		// Рё HEAD Р±РѕР»СЊС€Рµ РЅРµ РЅР° С‡С‚Рѕ СѓРєР°Р·С‹РІР°С‚СЊ.
+		Size = 0;
 		cout << "L_Constructor:\t" << this << endl;
 	}
 	~ForwardList()
 	{
+		del();
 		cout << "L_Destructor:\t" << this << endl;
+	}
+
+	const int& operator[](const int index)
+	{
+		int count = 0;
+		Element *tmp = this->Head;
+		while (tmp != nullptr)
+		{
+			if (count == index)
+			{
+				return tmp->Data;
+			}
+			tmp = tmp->pNext;
+			count++;
+
+		}
 	}
 //					Adding Elements
 	void push_front(int Data)
 	{
-		//1. Создать новый элемент
+		//1. РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
 		Element* New = new Element(Data);
-		//Прикрепить элемент к списку
+		//РџСЂРёРєСЂРµРїРёС‚СЊ СЌР»РµРјРµРЅС‚ Рє СЃРїРёСЃРєСѓ
 		New->pNext = Head;
-		//3. Новый элемент - это начальный элемент списка
+		//3. РќРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ - СЌС‚Рѕ РЅР°С‡Р°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°
 		Head = New;
+		Size++;
 	}
+
+
+void push_back(int Data)
+{
+	if (Head == nullptr)
+	{
+		Head = new Element(Data);
+	}
+	else
+	{
+		Element* tmp = this->Head;
+
+		while (tmp->pNext != nullptr)
+		{
+			tmp = tmp->pNext;
+		}
+		tmp->pNext = new Element(Data);
+	}
+	Size++;
+}
+void pop_front()
+{
+	Element* temp = Head;
+	Head = Head->pNext;
+	delete temp;
+	Size--;
+}
+void pop_back()
+{
+	erase(Size - 1);
+}
+void insert(int Data, int index)
+{
+	if (index == 0)
+	{
+		push_front(Data);
+	}
+	else
+	{
+		Element* tmp = this->Head;
+		for (int i = 0; i < index - 1; i++)//Р°РґСЂРµСЃ РїСЂРµРґС€РµРІСЃС‚РІСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р° index
+		{
+			tmp = tmp->pNext;//Р·Р°РїРёСЃС‹РІР°РµРј Р°РґСЂРµСЃ СЌР»РµРјРµРЅС‚РѕРІ РїРѕРєР° РЅРµ РґРѕР№РґРµРј РґРѕ РїСЂРµРґС€РµРІСЃС‚РІСѓСЋС‰РµРіРѕ index Р·РЅР°С‡РµРЅРёСЏ
+		}
+		Element* New = new Element(Data, tmp->pNext);
+		tmp->pNext = New;
+		Size++;
+	}
+}
+	void erase(int index)
+	{
+		if (index == 0)
+		{
+			pop_front();
+		}
+		else
+		{
+			Element* tmp = this->Head;
+			for (int i = 0; i < index - 1; i++)
+			{
+				tmp = tmp->pNext;
+			}
+			Element* del = tmp->pNext;
+			tmp->pNext = del->pNext;
+			delete del;
+			Size--;
+		}
+	}
+
+void del()
+{
+	while (Size){pop_front();}
+}
 
 	//				Methods
 	void print() const
 	{
-		Element* Temp = Head;//Temp - это итератор 
-		//Итератор - указатель, при помощи которого можно получить доступ
-		// к элементам структуры данных
+		Element* Temp = Head;//Temp - СЌС‚Рѕ РёС‚РµСЂР°С‚РѕСЂ 
+		//РС‚РµСЂР°С‚РѕСЂ - СѓРєР°Р·Р°С‚РµР»СЊ, РїСЂРё РїРѕРјРѕС‰Рё РєРѕС‚РѕСЂРѕРіРѕ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї
+		// Рє СЌР»РµРјРµРЅС‚Р°Рј СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР°РЅРЅС‹С…
 		while (Temp != nullptr)
 		{
 			cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
-			Temp = Temp->pNext; // преход на следующий элемент
+			Temp = Temp->pNext; // РїСЂРµС…РѕРґ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
 		}
 	}
 };
 void main()
 {
 	setlocale(LC_ALL, "Russian");
-	int n; cout << "Введите размер списка: "; cin >> n;
+	int n; cout << "Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ СЃРїРёСЃРєР°: "; cin >> n;
 	ForwardList list;
 	for (int i = 0; i < n; i++)
 	{
 		list.push_front(rand() % 100);
 	}
+	cout << "Add elements to the end of list: " << endl;
+	list.push_back(5);
+	list.push_back(10);
+	list.push_back(3);
+	cout << "List of elements: " << endl;
 	list.print();
+	cout << "Element: " << list[3] << endl;
+	cout << "Quantity of elements: " << list.get_Size() << endl;
+	cout << "Delete the first element: " << endl;
+	list.pop_front();
+	cout << "List of elements: " << endl;
+	list.print();
+	cout << "Insert element: " << endl;
+	list.insert(100, 1);
+	list.print();
+	cout << "Delete element: " << endl;
+	list.erase(1);
+	list.print();
+	cout << "Delete the last element: " << endl;
+	list.pop_back();
+	list.print();
+	cout << "Quantity of elements: " << list.get_Size() << endl;
+
+
+	
 }
