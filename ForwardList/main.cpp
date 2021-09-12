@@ -31,12 +31,35 @@ public:
 		Size = 0;
 		cout << "L_Constructor:\t" << this << endl;
 	}
+	ForwardList (const initializer_list<int>& il) :ForwardList()
+	{
+		cout << typeid (il.begin()).name() << endl;
+		for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			this->push_back(*it);
+		}
+	}
+	ForwardList(const ForwardList& other) :ForwardList()
+	{
+		//Конструктор копирования выполняет DeepCopy
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) 
+			push_back(Temp->Data);
+	}
 	~ForwardList()
 	{
 		del();
 		cout << "L_Destructor:\t" << this << endl;
 	}
-
+	//			Operators
+	ForwardList& operator=(const ForwardList& other)
+	{
+		//1- удалить старое значение объекта
+		while (Head) pop_front();
+		//Конструктор копирования выполняет DeepCopy
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_back(Temp->Data);
+		return *this;
+	}
 	const int& operator[](const int index)
 	{
 		int count = 0;
@@ -75,7 +98,7 @@ void push_back(int Data)
 	{
 		Element* tmp = this->Head;
 
-		while (tmp->pNext != nullptr)
+		while (tmp->pNext)
 		{
 			tmp = tmp->pNext;
 		}
@@ -141,18 +164,23 @@ void del()
 	void print() const
 	{
 		Element* Temp = Head;//Temp - это итератор 
-		//Итератор - указатель, при помощи которого можно получить доступ
-		// к элементам структуры данных
-		while (Temp != nullptr)
-		{
+		////Итератор - указатель, при помощи которого можно получить доступ
+		//// к элементам структуры данных
+		//while (Temp != nullptr)
+		//{
+		//	cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
+		//	Temp = Temp->pNext; // преход на следующий элемент
+		//}
+		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
 			cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
-			Temp = Temp->pNext; // преход на следующий элемент
-		}
 	}
 };
+
+//#define BASE_CHECK
 void main()
 {
 	setlocale(LC_ALL, "Russian");
+#ifdef BASE_CHECK
 	int n; cout << "Введите размер списка: "; cin >> n;
 	ForwardList list;
 	for (int i = 0; i < n; i++)
@@ -181,7 +209,12 @@ void main()
 	list.pop_back();
 	list.print();
 	cout << "Quantity of elements: " << list.get_Size() << endl;
+#endif // BASE_CHECK
 
+	ForwardList list = { 3,5,8,13,21 };
+	list.print();
+	ForwardList list2;
+	list2 = list;
+	list2.print();
 
-	
 }
