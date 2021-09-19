@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 using namespace std;
 
 class Element
@@ -101,12 +101,12 @@ void main()
 	{
 		obj.push_back(rand() % 10);
 	}
-	cout << "Çàïîëíåíèå äâóñâÿçíîãî ñïèñêà: " << endl;
+	cout << "Ð—Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ Ð´Ð²ÑƒÑÐ²ÑÐ·Ð½Ð¾Ð³Ð¾ ÑÐ¿Ð¸ÑÐºÐ°: " << endl;
 	obj.print();
-	cout << "Óäàëåíèå ïîñëåäíåãî ýëåìåíòà: " << endl;
+	cout << "Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½ÐµÐ³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: " << endl;
 	obj.pop_back();
 	obj.print();
-	cout << "Óäàëåíèå îäíîãî ýëåìåíòà: "; cin >> n;
+	cout << "Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð¾Ð´Ð½Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> n;
 	cout << endl;
 	obj.erase(n);
 	obj.print();
