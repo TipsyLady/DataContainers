@@ -207,7 +207,7 @@ public:
 
 };
 
-#define BASE_CHECK	
+//#define BASE_CHECK	
 //#define Container
 
 void main()
@@ -251,5 +251,25 @@ void main()
 	}
 #endif // Container
 
+	int arr[] = { 3,5,8,13,21 };
+	for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
+	{
+		cout << arr[i] << "  " ;
+	}
+	cout << endl;
+	for (int i : arr) //Range-base for (для работы с контейнерами)
+	{
+		cout << i << "  ";
+	}
+	cout << endl;
 
+	// for(type i : container)
+	//{  i-iterator;}
+
+	List list = { 0,1,1,2,3,5,8,13,21 };
+	for (int i : list) // type i - тип данных в контейнере
+	{
+		cout << i << "  ";
+	}
+	cout << endl;
 }
