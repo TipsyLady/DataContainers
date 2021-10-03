@@ -53,6 +53,42 @@ public:
 			return this->Temp->Data;
 		}
 	};
+	class Reverse_Iterator
+	{
+		Element* Temp;
+	public:
+		Reverse_Iterator(Element* Temp = nullptr) :Temp(Temp) {}
+		~Reverse_Iterator() {}
+
+		Reverse_Iterator& operator--()
+		{
+			Temp = Temp->pPrev;
+			return *this;
+		}
+		Reverse_Iterator& operator--(int)
+		{
+			Reverse_Iterator old = *this;
+			Temp = Temp->pPrev;
+			return old;
+		}
+		bool operator==(const Reverse_Iterator& other)const
+		{
+			return this->Temp == other.Temp;
+		}
+		bool operator !=(const Reverse_Iterator& other)const
+		{
+			return this->Temp != other.Temp;
+		}
+
+		const int& operator*()const
+		{
+			return this->Temp->Data;
+		}
+		int& operator*()
+		{
+			return this->Temp->Data;
+		}
+	};
 	Iterator begin()
 	{
 		return Head;
@@ -61,19 +97,14 @@ public:
 	{
 		return nullptr;
 	}
-	class ReverseIterator
+	Reverse_Iterator R_Begin()
 	{
-		Element* Temp;
-		ReverseIterator(Element* Temp = nullptr) :Temp(Temp)
-		{
-
-		}
-		~ReverseIterator()
-		{
-
-		}
-	};
-
+		return Tail;
+	}
+	Reverse_Iterator R_End()
+	{
+		return nullptr;
+	}
 	int get_Size()const { return Size; }
 
 	List()
@@ -205,10 +236,13 @@ public:
 
 //#define BASE_CHECK	
 //#define Container
+//#define ITERATOR
 
 void main()
 {
 	setlocale(LC_ALL, "Russian");
+
+
 
 #ifdef BASE_CHECK
 
@@ -247,10 +281,11 @@ void main()
 	}
 #endif // Container
 
+#ifdef ITERATOR
 	int arr[] = { 3,5,8,13,21 };
 	for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
 	{
-		cout << arr[i] << "  " ;
+		cout << arr[i] << "  ";
 	}
 	cout << endl;
 	for (int i : arr) //Range-base for (для работы с контейнерами)
@@ -268,4 +303,10 @@ void main()
 		cout << i << "  ";
 	}
 	cout << endl;
+#endif // ITERATOR
+	List<int> list3 = { 3,7,9,0,4,5 };
+	for (List<int>::Reverse_Iterator rIt = list3.R_Begin(); rIt != list3.R_End(); rIt--)
+	{
+		cout << *rIt << endl;
+	}
 }

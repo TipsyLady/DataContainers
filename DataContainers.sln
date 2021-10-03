@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForwardList", "ForwardList\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "List", "List\List.vcxproj", "{31DE9E62-0814-43FA-8ACA-55C6E9280CAA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Recursion", "Recursion\Recursion.vcxproj", "{52FF59A8-3FF4-4553-9461-3DC3FD153591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{31DE9E62-0814-43FA-8ACA-55C6E9280CAA}.Release|x64.Build.0 = Release|x64
 		{31DE9E62-0814-43FA-8ACA-55C6E9280CAA}.Release|x86.ActiveCfg = Release|Win32
 		{31DE9E62-0814-43FA-8ACA-55C6E9280CAA}.Release|x86.Build.0 = Release|Win32
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Debug|x64.ActiveCfg = Debug|x64
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Debug|x64.Build.0 = Debug|x64
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Debug|x86.ActiveCfg = Debug|Win32
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Debug|x86.Build.0 = Debug|Win32
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Release|x64.ActiveCfg = Release|x64
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Release|x64.Build.0 = Release|x64
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Release|x86.ActiveCfg = Release|Win32
+		{52FF59A8-3FF4-4553-9461-3DC3FD153591}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
