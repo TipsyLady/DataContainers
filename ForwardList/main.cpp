@@ -1,12 +1,17 @@
 ﻿#include <iostream>
 using namespace std;
 
+template <typename T>
+
+
+class ForwardList
+{
 class Element
 {
-	int Data; //значение элемента
+	T Data; //значение элемента
 	Element* pNext; //адрес следующего элемента
 public:
-	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
+	Element(T Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
 		cout << "E_Constructor:\t" << this << endl;
 	}
@@ -16,9 +21,6 @@ public:
 	}
 	friend class ForwardList;
 };
-
-class ForwardList
-{
 	int Size;
 	Element* Head;//голова списка - указывает на начальный(нулевой) элемент списка
 public:
@@ -82,7 +84,7 @@ public:
 		Size = 0;
 		cout << "L_Constructor:\t" << this << endl;
 	}
-	ForwardList (const initializer_list<int>& il) :ForwardList()
+	ForwardList (const initializer_list<T>& il) :ForwardList()
 	{
 		cout << typeid (il.begin()).name() << endl;
 		for (int const* it = il.begin(); it != il.end(); it++)
@@ -90,7 +92,7 @@ public:
 			this->push_back(*it);
 		}
 	}
-	ForwardList(const ForwardList& other) :ForwardList()
+	ForwardList(const ForwardList<T>& other) :ForwardList()
 	{
 		//Конструктор копирования выполняет DeepCopy
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) 
@@ -102,7 +104,7 @@ public:
 		cout << "L_Destructor:\t" << this << endl;
 	}
 	//			Operators
-	ForwardList& operator=(const ForwardList& other)
+	ForwardList<T>& operator=(const ForwardList<T>& other)
 	{
 		//1- удалить старое значение объекта
 		while (Head) pop_front();
@@ -127,7 +129,7 @@ public:
 		}
 	}
 //					Adding Elements
-	void push_front(int Data)
+	void push_front(T Data)
 	{
 		//1. Создать новый элемент
 		Element* New = new Element(Data);
@@ -139,7 +141,7 @@ public:
 	}
 
 
-void push_back(int Data)
+void push_back(T Data)
 {
 	if (Head == nullptr)
 	{
@@ -168,7 +170,7 @@ void pop_back()
 {
 	erase(Size - 1);
 }
-void insert(int Data, int index)
+void insert(T Data, int index)
 {
 	if (index == 0)
 	{
@@ -262,7 +264,7 @@ void main()
 	cout << "Quantity of elements: " << list.get_Size() << endl;
 #endif // BASE_CHECK
 
-	ForwardList list = { 3,5,8,13,21 };
+	ForwardList <int> list = { 3,5,8,13,21 };
 	list.print();
 	/*ForwardList list2;
 	list2 = list;
