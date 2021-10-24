@@ -24,7 +24,32 @@ public:
 	}
 	Tree() :Root(Root) {}
 	~Tree() {}
-
+	void insert(int Data)
+	{
+		insert(Data, Root);
+	}
+	int minValue() const
+	{
+		return minValue(Root);
+	}
+	int maxValue() const
+	{
+		return maxValue(Root);
+	}
+	int Count() const
+	{
+		return Count(Root);
+	}
+	int Sum() const
+	{
+		return Sum(Root);
+	}
+	void print()const
+	{
+		print(this->Root);
+		cout << endl;
+	}
+private:
 	void insert(int Data, Element* Root)
 	{
 		
@@ -45,13 +70,34 @@ public:
 				insert(Data, Root->pLeft);
 			}
 		}
-		else
+		else if(Data>Root->Data)
 		{
 			if (Root->pRight)insert(Data, Root->pRight);
 			else Root->pRight = new Element(Data);
 		}
 	}
 
+	int minValue(Element* Root) const
+	{
+		/*if (Root->pLeft == nullptr)return Root->Data;
+		else return minValue(Root->pLeft);*/
+		return Root->pLeft ? minValue(Root->pLeft) : Root->Data;
+	}
+
+	int maxValue(Element* Root) const
+	{
+		return Root->pRight ? maxValue(Root->pRight) :Root->Data;
+	}
+	int Count(Element* Root) const
+	{
+		/*if (Root == nullptr )return 0;
+		else return Count(Root->pLeft) + Count(Root->pRight)+1;*/
+		return Root ? Count(Root->pLeft) + Count(Root->pRight) + 1:0;
+	}
+	int Sum(Element* Root)const
+	{
+		return Root == nullptr ? 0 : Sum(Root->pLeft) + Sum(Root->pRight) + Root->Data;
+	}
 	void print(Element* Root) const
 	{
 		if (Root == nullptr)return;
@@ -68,7 +114,11 @@ void main()
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
-		tree.insert(rand() % 100, tree.getRoot());
+		tree.insert(rand() % 100);
 	}
-	tree.print(tree.getRoot());
+	tree.print();
+	cout << "Минимальное значение в дереве: " << tree.minValue() << endl;
+	cout << "Максимальное значение в дереве: " << tree.maxValue() << endl;
+	cout <<"Количество элементов в дереве: " << tree.Count() << endl;
+	cout << "Сумма всех элементов в дереве: " << tree.Sum() << endl;
 }
